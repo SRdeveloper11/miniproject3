@@ -13,10 +13,10 @@ public class Question10 {
 		String dbURL = "jdbc:mysql://localhost/studentprojectdatabase";
 		 String username = "root";
 		 String password = "shivam@123";	
-		 String q="SELECT  DISTINCT  student.ST_NO,ST_Name,  ST_DOB,  ST_DOJ\r\n"
-		 		+ "FROM student, Studentproject \r\n"
-		 		+ "where Studentproject .PRJ_NO =\"P03\"\r\n"
-		 		+ "AND student.ST_NO=Studentproject.ST_NO;";
+		 String q="\"select * from student where st_no in\"\r\n"
+		 		+ "				+ \"(select st_no from studentproject where prj_no in\"\r\n"
+		 		+ "				+ \"(select prj_no from studentproject group by prj_no having count(distinct(st_no))=3\"\r\n"
+		 		+ "				+ \"))\";";
 		  Connection conn = DriverManager.getConnection(dbURL, username, password);
 		 Statement smt=conn.createStatement();
 		   ResultSet rs=smt.executeQuery(q);
